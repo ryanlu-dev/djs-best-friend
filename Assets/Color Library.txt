@@ -1,0 +1,5 @@
+Background - (39, 42, 47 or #272A2F)
+Logo/Buttons - (138, 180, 248 or #8AB4F8)
+Icons and Text - (154, 160, 166 or #9AA0A6)
+Menu Bar - (32, 33, 36 or #202124)
+Title/Top Bar - (57, 68, 87 or #394457)
