@@ -1,0 +1,23 @@
+Icons:
+    Google Fonts:
+        ChangeCircle.png
+            "Change Circle"
+            https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Achange_circle
+        Help.png
+            "Help"
+            https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Ahelp
+        Home.png
+            "Home"
+            https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Ahome
+        Settings.png
+            "Settings"
+            https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Asettings
+    PNGWing:
+        Logo.png
+            "YouTube Loop Phonograph record Roland TR-808 Music, Drum Machine, angle, rectangle, beat png free download"
+            https://www.pngwing.com/en/free-png-tnczc/download
+Data:
+    Kaggle - Yamac Eren Ay
+        US.csv
+            "Spotify Tracks Dataset 1922-2021"
+            https://www.kaggle.com/yamaerenay/spotify-tracks-dataset-19222021?select=US.csv
