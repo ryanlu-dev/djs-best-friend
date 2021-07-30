@@ -3,8 +3,6 @@
 using namespace std;
 #include <vector>
 #include <string>
-#include <unordered_map>
-#include <map>
 class Track {
   public:
     Track(); // Probably will go unused.
@@ -40,16 +38,14 @@ class Track {
     bool mode;
 };
 
-class SongUM {
+class SongHash { // Implement a hash table.
   public:
     void AddTrack(Track t);
   private:
-    unordered_map<string, Track> internal; // Maps ID strings to Tracks.
 };
 
-class SongTree {
+class SongTree { // Implement a tree.
   public:
     void AddTrack(Track t);
   private:
-    map<string, Track> internal; // Maps ID strings to Tracks.
 };
