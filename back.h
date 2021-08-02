@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-#include "MurmurHash3.cpp"
+#include "MurmurHash3.h"
 using std::cout;
 using std::endl;
 using std::vector;
