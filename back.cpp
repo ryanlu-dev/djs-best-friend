@@ -1,9 +1,5 @@
 // Howdy, I'm the back-end code.
 #include "back.h"
-#include "MurmurHash3.cpp"
-#include <fstream>
-#include <iostream>
-#include <iomanip>
 #define BUCKET_AMT 70000
 
  // Constructing the hashtable parses relevant values from the data set and
@@ -34,8 +30,9 @@ SongHash::SongHash() {
     ifstream input;
     input.open("assets/US.csv");
     if(!input.is_open()) {
-        cerr << "Error: File not found or unable to be opened." << endl;
+        cout << "Error: File not found or unable to be opened." << endl;
         input.close();
+        return;
     }
     int row = 2;
     string trash;
@@ -356,8 +353,9 @@ SongTree::SongTree() {
     ifstream input;
     input.open("assets/US.csv");
     if(!input.is_open()) {
-        cerr << "Error: File not found or unable to be opened." << endl;
+        cout << "Error: File not found or unable to be opened." << endl;
         input.close();
+        return;
     }
     int row = 2;
     string trash;

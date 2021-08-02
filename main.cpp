@@ -2,13 +2,11 @@
 #include "back.cpp"
 #include "front.cpp"
 #include "time.h"
-#include <iostream>
 #define TESTING_ID "3cfOd4CMv2snFaKAnMdnvK"
 #define TESTING_TEMPO 0.05
 #define TESTING_KEY 0.0
 #define TESTING_DANCEABILITY 0.1
 #define TESTING_ENERGY 0.05
-using namespace std;
 
 /*
     Default data structure:

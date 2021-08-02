@@ -1,8 +1,17 @@
 #pragma once
-using namespace std;
 #include <queue>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
+#include "MurmurHash3.cpp"
+using std::cout;
+using std::endl;
+using std::vector;
+using std::string;
+using std::ifstream;
+
 struct Track {
     Track(string _id, string _name, vector<string> _artists, unsigned int _danceability,
           unsigned int _energy, unsigned char _tempo, unsigned char _key, bool _mode,
