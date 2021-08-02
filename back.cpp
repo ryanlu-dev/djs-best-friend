@@ -1,5 +1,17 @@
 // Howdy, I'm the back-end code.
 #include "back.h"
+#include "MurmurHash3.h"
+#include <queue>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
+using std::cout;
+using std::endl;
+using std::vector;
+using std::string;
+using std::ifstream;
 #define BUCKET_AMT 70000
 
  // Constructing the hashtable parses relevant values from the data set and
