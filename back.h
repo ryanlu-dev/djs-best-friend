@@ -1,6 +1,8 @@
 #pragma once
 using namespace std;
 #include <vector>
+#include <list>
+#include <deque>
 #include <string>
 struct Track {
     Track(string _id, string _name, vector<string> _artists, unsigned int _danceability,
@@ -25,15 +27,17 @@ struct Track {
 
 class SongHash { // Implement a hash table.
   public:
-    void AddTrack(Track t);
     SongHash();
+    unsigned int GetHash(string s);
+    Track* GetTrack(unsigned int hID, string ID);
+    vector<Track*> GetSimilarTracks(Track* t, float tempoPct, float keyPct, float danceabilityPct, float energyPct);
   private:
-
+    vector<Track*>* internal;
 };
 
 class SongTree { // Implement a tree.
   public:
-    void AddTrack(Track t);
+    void AddTrack( Track t);
     SongTree();
   private:
     

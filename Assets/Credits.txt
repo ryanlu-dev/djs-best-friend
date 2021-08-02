@@ -21,3 +21,11 @@ Data:
         US.csv
             "Spotify Tracks Dataset 1922-2021"
             https://www.kaggle.com/yamaerenay/spotify-tracks-dataset-19222021?select=US.csv
+Hash Function:
+    Austin Appleby:
+        MurmurHash3.cpp
+            "MurmurHash3.cpp"
+            https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp
+        MurmurHash3.h
+            "MurmurHash3.h"
+            https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.h

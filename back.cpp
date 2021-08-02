@@ -1,11 +1,15 @@
 // Howdy, I'm the back-end code.
 #include "back.h"
+#include "MurmurHash3.cpp"
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#define BUCKET_AMT 70000
+
  // Constructing the hashtable parses relevant values from the data set and
  // places them into the table as Track objects.
 SongHash::SongHash() {
+    internal = new vector<Track*>[BUCKET_AMT];
     /*
         ==Parsing the data==
         ids and names are stored as strings.
@@ -43,6 +47,8 @@ SongHash::SongHash() {
         getline(input, id, ',');
         //cout << "The ID at " << row << " is " << id << endl;
         
+        //cout << "The hashed ID of " << row << " is " << hashedID[0] << endl;
+
         /*  Reading in the name of the track, may contain commas or quotes.
             If it begins with a quote, then there must be a quote inside the
             string or a comma or both.
@@ -217,9 +223,114 @@ SongHash::SongHash() {
         unsigned char timeSig = stoi(timeSigS);
         //cout << "The time signature of " << row << " is " << (int)timeSig << endl;
 
+        // Turning this track into an object.
+        Track* thisTrack = new Track(id, name, artists, danceability, energy, tempo, key, mode, timeSig);
+        unsigned int index = GetHash(id);
+        internal[index].push_back(thisTrack);
+
         if(row == 93136) // How many rows to go through
             break;
         row++;
     }
     input.close();
+}
+
+unsigned int SongHash::GetHash(string s) {
+    // Hashing this ID into an unsigned 32-bit integer (uint32_t)
+    const char* cID = s.c_str();
+    uint32_t hashedID[1];
+    MurmurHash3_x86_32(cID, 22, 1, hashedID);
+    return hashedID[0] % BUCKET_AMT;
+}
+
+Track* SongHash::GetTrack(unsigned int hID, string ID) {
+    for(auto it : internal[hID]) {
+        if(it->id == ID)
+            return it;
+    }
+}
+
+vector<Track*> SongHash::GetSimilarTracks(Track* t, float tempoPct, float keyPct, float danceabilityPct, float energyPct) {
+    vector<Track*> similarTracks;
+    unsigned char tempoUpper, tempoLower, keyUpper, keyLower, keyToChange;
+    unsigned int danceabilityUpper, danceabilityLower, energyUpper, energyLower;
+    unsigned char acceptableKeys[5];
+
+    tempoUpper = (1 + tempoPct) * t->tempo;
+    tempoLower = (1 - tempoPct) * t->tempo;
+
+    if(keyPct > 0.1333) {
+        keyToChange = 2;
+    }
+    else if(keyPct <= 0.1333 && keyPct > 0.06) {
+        keyToChange = 1;
+    }
+    else {
+        keyToChange = 0;
+    }
+    keyUpper = t->key + keyToChange;
+    keyLower = t->key - keyToChange;
+    if(keyUpper > 11) {
+        keyUpper -= 12;
+    }
+    if(keyLower < 0) {
+        keyLower += 12;
+    }
+    acceptableKeys[0] = t->key;
+    acceptableKeys[1] = keyUpper;
+    acceptableKeys[2] = keyLower;
+
+    if(t->key == 11 && keyToChange == 2) {
+        acceptableKeys[3] = 0;
+        acceptableKeys[4] = 10;
+    }
+    else if(t->key == 10 && keyToChange == 2) {
+        acceptableKeys[3] = 11;
+        acceptableKeys[4] = 9;
+    }
+    else if(t->key == 0 && keyToChange == 2) {
+        acceptableKeys[3] = 1;
+        acceptableKeys[4] = 11;
+    }
+    else if(t->key == 1 && keyToChange == 2) {
+        acceptableKeys[3] = 2;
+        acceptableKeys[4] = 0;
+    }
+    
+    danceabilityUpper = (1 + danceabilityPct) * t->danceability;
+    danceabilityLower = (1 - danceabilityPct) * t->danceability;
+    if(danceabilityUpper > 10000)
+        danceabilityUpper = 10000;
+
+    energyUpper = (1 + energyPct) * t->energy;
+    energyLower = (1 - energyPct) * t->energy;
+    if(energyUpper > 10000)
+        energyUpper = 10000;
+
+    for(int i = 0; i < BUCKET_AMT; i++) { // Iterating through every bucket
+        for(auto x : internal[i]) { // Iterating through every track in bucket
+            if(t->mode == x->mode && t->timeSig == x->timeSig) { // Matching time signature and mode
+                for(auto k : acceptableKeys) { 
+                    if(x->key == k) { // Key is within acceptable range
+                        if(x->tempo > tempoLower && x->tempo < tempoUpper) { // Tempo is within acceptable range
+                            if(x->danceability > danceabilityLower && x->danceability < danceabilityUpper) { // Danceability is within acceptable range
+                                if(x->energy > energyLower && x->energy < energyUpper) { // Energy is within acceptable range
+                                    bool duplicate = false;
+                                    for(auto d : similarTracks) {
+                                        if(d->name == x->name) {
+                                            duplicate = true;
+                                            break;
+                                        }
+                                    }
+                                    if(!duplicate && t->name != x->name)
+                                        similarTracks.push_back(x);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return similarTracks;
 }
