@@ -1,12 +1,7 @@
 // Hello, I'm the driver.
-#include "back.h"
+#include "back.cpp"
 #include "front.cpp"
 #include "time.h"
-#include <iostream>
-#include <iomanip>
-using std::cout;
-using std::endl;
-using std::vector;
 #define TESTING_ID "3cfOd4CMv2snFaKAnMdnvK"
 #define TESTING_TEMPO 0.05
 #define TESTING_KEY 0.0
@@ -67,7 +62,6 @@ int main() {
     t8 = clock();
     float tSimilar = ((float)t8 - (float)t7)/CLOCKS_PER_SEC;
     cout << "Wow, it took " << similar << " seconds to find all these similar songs." << endl;
-    cout << "Press any key to continue..." << endl;
-    std::cin >> parsed;
+
     return 0;
 }
